@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +21,18 @@ import com.example.model.Persona;
 import com.example.service.api.PersonaServiceAPI;
 
 @RestController
-@RequestMapping(value = "/api/v1/")
-@CrossOrigin("*")
+@RequestMapping(value = "/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
+
 public class PersonaRestController {
 
+	private static final Logger logger = LoggerFactory.getLogger(PersonaRestController.class);
 	@Autowired
 	private PersonaServiceAPI personaServiceAPI;
 
 	@GetMapping(value = "/all")
 	public List<Persona> getAll() {
+		logger.info("Se recibió una solicitud de React");
 		return personaServiceAPI.getAll();
 	}
 	
