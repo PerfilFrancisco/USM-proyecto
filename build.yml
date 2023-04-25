@@ -2,7 +2,7 @@ name: SonarCloud
 on:
   push:
     branches:
-      - testspringboot
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -32,6 +32,6 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.30320099ff0a892087573b1570b2ee62ee0c77d5 }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=PerfilFrancisco_USM-proyecto
