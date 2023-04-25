@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ManyToOne;
+
 
 
 @Entity
@@ -31,6 +34,10 @@ public class Persona {
 	
 	@Column
 	private String telefono;
+
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	private Persona persona;
 
 	public Long getId() {
 		return id;

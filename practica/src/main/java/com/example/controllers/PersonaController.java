@@ -12,7 +12,6 @@ import com.example.model.Persona;
 import com.example.service.api.PersonaServiceAPI;
 
 @Controller
-@RequestMapping("/home")
 public class PersonaController {
 
 	@Autowired
@@ -41,16 +40,15 @@ public class PersonaController {
 	}
 
 	@PostMapping("/save")
-	public String save(Persona persona, Model model) {
+	public String save(Persona persona) {
 		personaServiceAPI.save(persona);
 		return "redirect:/home/";
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable Long id, Model model) {
+	public String delete(@PathVariable Long id) {
 		personaServiceAPI.delete(id);
 
 		return "redirect:/home/";
 	}
-
 }
