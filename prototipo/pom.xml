@@ -145,7 +145,7 @@
 					<sonar.projectKey>PerfilFrancisco_USM-proyecto</sonar.projectKey>
 					<sonar.organization>equipousm</sonar.organization>
         				<sonar.projectName>USM-proyecto</sonar.projectName>
-				<configuration/>
+				</configuration>
 			<plugin>
 		</plugins>
 	</build>
