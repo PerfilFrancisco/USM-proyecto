@@ -20,5 +20,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey: PerfilFrancisco_USM-proyecto
-            -Dsonar.organization: equipousm
+            - Dsonar.projectKey: PerfilFrancisco_USM-proyecto
+            - Dsonar.organization: equipousm
