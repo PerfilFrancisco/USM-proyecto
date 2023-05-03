@@ -1,6 +1,8 @@
 package com.example.prototipo.controller;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +21,13 @@ import com.example.prototipo.service.EmpresaService;
 @CrossOrigin(maxAge = 3600)
 public class EmpresaRestController {
 
-      
+      @Autowired
       private EmpresaService empresaService;
  
-      public EmpresaRestController(EmpresaService empresaService) {
-            this.empresaService = empresaService;
+      @GetMapping("/")
+      public String index() {
+            return "index";
       }
-
 
       @GetMapping("/buscar")
       public ResponseEntity<List<Empresa>> findAll(){
@@ -34,7 +36,7 @@ public class EmpresaRestController {
       }
 
       @PostMapping("/crear")
-      public Empresa crearEmpresa(@RequestBody Empresa empresa) {
+      Empresa crearEmpresa(@RequestBody Empresa empresa) {
             return empresaService.crearEmpresa(empresa);
       }
 
