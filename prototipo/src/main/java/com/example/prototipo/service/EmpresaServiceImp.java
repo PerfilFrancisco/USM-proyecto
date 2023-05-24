@@ -20,8 +20,8 @@ public class EmpresaServiceImp implements EmpresaService{
 
       @Override
       public List<Empresa> buscarTodos(){
-            List<Empresa> empresas = empresaRepository.findAll();
-            return empresas;
+            //List<Empresa> empresas = empresaRepository.findAll();
+            return empresaRepository.findAll();
       }
 
 
@@ -32,4 +32,15 @@ public class EmpresaServiceImp implements EmpresaService{
             
       }
       
+      @Override
+      public Empresa buscarPorId(Long id) {
+            return empresaRepository.findById(id).orElse(null);
+      }
+
+      @Override
+      public Empresa buscarPorCorreo(String correo) {
+            return empresaRepository.findByCorreo(correo);
+      }
+
+
 }

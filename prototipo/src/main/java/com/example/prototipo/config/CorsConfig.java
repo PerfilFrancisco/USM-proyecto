@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,29 +22,17 @@ public class CorsConfig {
       public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
           http.csrf()
               .disable()              
-            //   .authorizeHttpRequests((authorize) -> authorize
-            //       .requestMatchers("/admin/**").hasRole("ADMIN")
-            //       .requestMatchers("/api/**").anonymous()
-            //       .requestMatchers("/login*").permitAll()           
-            //       .anyRequest().permitAll()                                   
-            //       .and()
-            //   );      
-              .authorizeHttpRequests((authorize)-> authorize
+     
+              .authorizeHttpRequests(authorize-> authorize
                   .requestMatchers("/admin/**").hasRole("ADMIN")
                   .requestMatchers("/api/**").permitAll()
-                  .anyRequest().permitAll()
-                  .and()
+                  .anyRequest().permitAll()                  
               );
 
               http.cors();
               return http.build();
       }
-      // @Autowired
-      // public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-      //   auth
-      //     .inMemoryAuthentication()
-      //       .withUser("user").password("password").roles("USER");
-      // }
+
 
       @Value("${allowed.origin}")
       private String allowedOrigin;
@@ -59,4 +49,9 @@ public class CorsConfig {
                   }
             };
       }
+
+      @Bean 
+      public PasswordEncoder passwordEncoder() { 
+          return new BCryptPasswordEncoder(); 
+      } 
 }

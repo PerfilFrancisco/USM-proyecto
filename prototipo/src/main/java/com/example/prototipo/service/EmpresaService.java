@@ -10,4 +10,8 @@ public interface EmpresaService {
       List<Empresa> buscarTodos();
 
       Empresa crearEmpresa(Empresa empresa);
+
+      Empresa buscarPorId(Long id);
+
+      Empresa buscarPorCorreo(String correo);
 }
