@@ -11,4 +11,9 @@ import com.example.prototipo.model.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Long>{ 
       
       List<Empresa> findAll();
+
+      Empresa findByCorreo(String correo);
+
+      Empresa findById(long id);
+
 }
