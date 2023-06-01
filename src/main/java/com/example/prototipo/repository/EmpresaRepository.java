@@ -12,8 +12,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
       
       List<Empresa> findAll();
 
-      Empresa findByCorreo(String correo);
+      Empresa findByEmail(String email);
 
-      Empresa findById(long id);
 
 }

@@ -23,9 +23,9 @@ public class UsuarioServiceImp implements UsuarioService{
       private UsuarioRepository usuarioRepository;
 
       @Override
-      public Usuario guardar(UsuarioRegistroDTO usuarioRegistroDTO) {
-            Usuario usuario = new Usuario(usuarioRegistroDTO.getNombre(), usuarioRegistroDTO.getContrasena());
-            return usuarioRepository.save(usuario);
+      public Usuario guardar(Usuario usuario) {
+            Usuario user = new Usuario(usuario.getNombre(), usuario.getContrasena());
+            return usuarioRepository.save(user);
       }
       @Override
 	public List<Usuario> buscarTodos() {
@@ -48,8 +48,8 @@ public class UsuarioServiceImp implements UsuarioService{
             return usuarioRepository.findByNombreAndContrasena(nombre, contrasena);
       }
       @Override
-      public Usuario buscarPorNombreYContrasena(UsuarioRegistroDTO usuarioRegistroDTO) {
-            return usuarioRepository.findByNombreAndContrasena(usuarioRegistroDTO.getNombre(), usuarioRegistroDTO.getContrasena());
+      public Usuario buscarPorNombreYContrasena(Usuario usuario) {
+            return usuarioRepository.findByNombreAndContrasena(usuario.getNombre(), usuario.getContrasena());
       }
       
 }

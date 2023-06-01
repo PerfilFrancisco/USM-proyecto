@@ -39,7 +39,7 @@ public class EmpresaServiceImp implements EmpresaService{
 
       @Override
       public Empresa buscarPorCorreo(String correo) {
-            return empresaRepository.findByCorreo(correo);
+            return empresaRepository.findByEmail(correo);
       }
 
 

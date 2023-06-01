@@ -3,7 +3,10 @@ package com.example.prototipo.controller;
 import java.util.List;
 
 import org.checkerframework.checker.units.qual.A;
+import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.prototipo.dto.UsuarioRegistroDTO;
 import com.example.prototipo.model.Empresa;
 import com.example.prototipo.model.Usuario;
+import com.example.prototipo.repository.UsuarioRepository;
 import com.example.prototipo.service.EmpresaService;
 import com.example.prototipo.service.UsuarioService;
 
@@ -54,7 +58,7 @@ public class Controladores {
       @PostMapping("/crear")
       Empresa crearEmpresa(@RequestBody Empresa empresa) {
             //i want to see if the empresa is not in the database
-            Empresa empresaEncontrada = empresaService.buscarPorCorreo(empresa.getCorreo());
+            Empresa empresaEncontrada = empresaService.buscarPorCorreo(empresa.getEmail());
             if(empresaEncontrada == null){
                   return empresaService.crearEmpresa(empresa);
             }
@@ -71,21 +75,26 @@ public class Controladores {
       
       //i want to create a user
       @PostMapping("/crearUsuario")
-      Usuario crearUsuario(@RequestBody UsuarioRegistroDTO usuarioRegistroDTO) {
-            return usuarioService.guardar(usuarioRegistroDTO);
+      Usuario crearUsuario(@RequestBody Usuario usuario) {
+            return usuarioService.guardar(usuario);
       }
       //i want to see if the user is in the database
       @GetMapping("/buscarUsuario")
       public ResponseEntity<List<Usuario>> findAllUsers(){
-            List<Usuario> usuarios = usuarioService.buscarTodos();
-            return ResponseEntity.ok(usuarios);
+            List<Usuario> usuarios = usuarioService.buscarTodos(); 
+            return ResponseEntity.ok(usuarios);            
       }
-
       //i want to start a sesion
       @PostMapping("/login")
-      public ResponseEntity<Usuario> iniciarSesion(@RequestBody UsuarioRegistroDTO usuarioRegistroDTO){
-            Usuario usuario = usuarioService.buscarPorNombreYContrasena(usuarioRegistroDTO);
-            return ResponseEntity.ok(usuario);
+      public ResponseEntity<?> iniciarSesion(@RequestBody Usuario usuario){
+            Usuario user = usuarioService.buscarPorNombreYContrasena(usuario.getNombre(), usuario.getContrasena());
+            
+            if (user != null){
+                  return ResponseEntity.ok(user);
+            }
+            else{
+                  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+            }
       }
 
 }

@@ -6,7 +6,7 @@ import com.example.prototipo.dto.UsuarioRegistroDTO;
 import com.example.prototipo.model.Usuario;
 
 public interface UsuarioService {
-      public Usuario guardar(UsuarioRegistroDTO usuarioRegistroDTO);
+      public Usuario guardar(Usuario usuario);
 
       public List<Usuario> buscarTodos();
 
@@ -18,5 +18,5 @@ public interface UsuarioService {
 
       public Usuario buscarPorNombreYContrasena(String nombre, String contrasena);
 
-      public Usuario buscarPorNombreYContrasena(UsuarioRegistroDTO usuarioRegistroDTO);
+      public Usuario buscarPorNombreYContrasena(Usuario usuario);
 }
