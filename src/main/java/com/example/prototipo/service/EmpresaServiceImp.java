@@ -32,10 +32,16 @@ public class EmpresaServiceImp implements EmpresaService{
             
       }
       
-      @Override
-      public Empresa buscarPorId(Long id) {
-            return empresaRepository.findById(id).orElse(null);
-      }
+      // @Override
+      // public Empresa buscarPorRut(String rut_empresa) {
+      //       Empresa empresa = empresaRepository.findByrut_empresa(rut_empresa);
+      //       if (empresa != null) {
+      //             return empresa;
+      //       }
+      //       else{
+      //             return null;
+      //       }
+      // }
 
       @Override
       public Empresa buscarPorCorreo(String correo) {

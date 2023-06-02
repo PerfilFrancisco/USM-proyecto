@@ -3,20 +3,20 @@ package com.example.prototipo.service;
 import java.util.List;
 
 import com.example.prototipo.dto.UsuarioRegistroDTO;
-import com.example.prototipo.model.Usuario;
+import com.example.prototipo.model.Administrador;
 
 public interface UsuarioService {
-      public Usuario guardar(Usuario usuario);
+      public Administrador guardar(Administrador usuario);
 
-      public List<Usuario> buscarTodos();
+      public List<Administrador> buscarTodos();
 
-      public Usuario buscarPorId(Long id);
+      public Administrador buscarPorId(Long id);
 
-      public Usuario buscarPorContrasena(String contrasena);
+      public Administrador buscarPorContrasena(String contrasena);
 
-      public Usuario buscarPorNombre(String nombre);
+      public Administrador buscarPorNombre(String nombre);
 
-      public Usuario buscarPorNombreYContrasena(String nombre, String contrasena);
+      public Administrador buscarPorNombreYContrasena(String nombre, String contrasena);
 
-      public Usuario buscarPorNombreYContrasena(Usuario usuario);
+      public Administrador buscarPorNombreYContrasena(Administrador usuario);
 }

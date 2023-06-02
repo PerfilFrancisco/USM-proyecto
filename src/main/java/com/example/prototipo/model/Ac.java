@@ -24,8 +24,12 @@ public class Ac {
       private Long id_ac;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
+      @JoinColumn(name = "rut_empresa")      
       private Empresa empresa;
+
+      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @JoinColumn(name = "correo")      
+      private Evaluador evaluador; 
 
       public Ac(){}
 
@@ -76,6 +80,5 @@ public class Ac {
       public void setEmpresa(Empresa empresa) {
             this.empresa = empresa;
       }
-
-      
+  
 }

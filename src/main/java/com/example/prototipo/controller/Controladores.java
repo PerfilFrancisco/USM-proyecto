@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.prototipo.dto.UsuarioRegistroDTO;
 import com.example.prototipo.model.Empresa;
-import com.example.prototipo.model.Usuario;
+import com.example.prototipo.model.Administrador;
 import com.example.prototipo.repository.UsuarioRepository;
 import com.example.prototipo.service.EmpresaService;
 import com.example.prototipo.service.UsuarioService;
@@ -48,21 +48,31 @@ public class Controladores {
             return ResponseEntity.ok(empresas);
       }
 
-      @GetMapping("/buscar/{id}")
-      public ResponseEntity<Empresa> findById(@PathVariable Long id){
-            Empresa empresa = empresaService.buscarPorId(id);
-            return ResponseEntity.ok(empresa);
+      // @GetMapping("/buscar/{id}")
+      // public ResponseEntity<Empresa> findByRut(@PathVariable String rut_empresa){
+      //       Empresa empresa = empresaService.buscarPorRut(rut_empresa);
+      //       return ResponseEntity.ok(empresa);
+      // }
+
+      @GetMapping("/buscarCorreo/{correo}")
+      public ResponseEntity<Empresa> findByEmail(@PathVariable String email){
+            Empresa empresa = empresaService.buscarPorCorreo(email);
+            if (empresa != null) {
+                  return ResponseEntity.ok(empresa);
+            }
+            else{
+                  return ResponseEntity.notFound().build();
+            }
       }
 
-
-      @PostMapping("/crear")
+      @PostMapping("/crearEmpresa")
       Empresa crearEmpresa(@RequestBody Empresa empresa) {
             //i want to see if the empresa is not in the database
             Empresa empresaEncontrada = empresaService.buscarPorCorreo(empresa.getEmail());
             if(empresaEncontrada == null){
                   return empresaService.crearEmpresa(empresa);
             }
-            else{
+            else {
                   return null;
             }
       }
@@ -75,19 +85,19 @@ public class Controladores {
       
       //i want to create a user
       @PostMapping("/crearUsuario")
-      Usuario crearUsuario(@RequestBody Usuario usuario) {
+      Administrador crearUsuario(@RequestBody Administrador usuario) {
             return usuarioService.guardar(usuario);
       }
       //i want to see if the user is in the database
       @GetMapping("/buscarUsuario")
-      public ResponseEntity<List<Usuario>> findAllUsers(){
-            List<Usuario> usuarios = usuarioService.buscarTodos(); 
+      public ResponseEntity<List<Administrador>> findAllUsers(){
+            List<Administrador> usuarios = usuarioService.buscarTodos(); 
             return ResponseEntity.ok(usuarios);            
       }
       //i want to start a sesion
       @PostMapping("/login")
-      public ResponseEntity<?> iniciarSesion(@RequestBody Usuario usuario){
-            Usuario user = usuarioService.buscarPorNombreYContrasena(usuario.getNombre(), usuario.getContrasena());
+      public ResponseEntity<?> iniciarSesion(@RequestBody Administrador usuario){
+            Administrador user = usuarioService.buscarPorNombreYContrasena(usuario.getNombre(), usuario.getContrasena());
             
             if (user != null){
                   return ResponseEntity.ok(user);

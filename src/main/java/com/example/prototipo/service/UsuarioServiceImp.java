@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.prototipo.dto.UsuarioRegistroDTO;
 
-import com.example.prototipo.model.Usuario;
+import com.example.prototipo.model.Administrador;
 import com.example.prototipo.repository.UsuarioRepository;
 
 
@@ -23,32 +23,32 @@ public class UsuarioServiceImp implements UsuarioService{
       private UsuarioRepository usuarioRepository;
 
       @Override
-      public Usuario guardar(Usuario usuario) {
-            Usuario user = new Usuario(usuario.getNombre(), usuario.getContrasena());
+      public Administrador guardar(Administrador usuario) {
+            Administrador user = new Administrador(usuario.getNombre(), usuario.getContrasena());
             return usuarioRepository.save(user);
       }
       @Override
-	public List<Usuario> buscarTodos() {
+	public List<Administrador> buscarTodos() {
 		return usuarioRepository.findAll();
 	}
       @Override
-      public Usuario buscarPorId(Long id) {
+      public Administrador buscarPorId(Long id) {
             return usuarioRepository.findById(id).orElse(null);
       }
       @Override
-      public Usuario buscarPorContrasena(String contrasena) {
+      public Administrador buscarPorContrasena(String contrasena) {
             return usuarioRepository.findByContrasena(contrasena);
       }
       @Override
-      public Usuario buscarPorNombre(String nombre) {
+      public Administrador buscarPorNombre(String nombre) {
             return usuarioRepository.findByNombre(nombre);
       }
       @Override
-      public Usuario buscarPorNombreYContrasena(String nombre, String contrasena) {
+      public Administrador buscarPorNombreYContrasena(String nombre, String contrasena) {
             return usuarioRepository.findByNombreAndContrasena(nombre, contrasena);
       }
       @Override
-      public Usuario buscarPorNombreYContrasena(Usuario usuario) {
+      public Administrador buscarPorNombreYContrasena(Administrador usuario) {
             return usuarioRepository.findByNombreAndContrasena(usuario.getNombre(), usuario.getContrasena());
       }
       

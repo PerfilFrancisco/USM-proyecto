@@ -16,15 +16,58 @@ public class Pc {
       @Column
       private int pc_1;
 
-      // @JoinColumn(name = "rut_empresa")
-      // @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      // @Column(length = 45)
-      // private String Empresa_rut; 
       @Id
       @Column
       private Long id_pc;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
+      @JoinColumn(name = "rut_empresa")      
       private Empresa empresa;
+
+      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @JoinColumn(name = "correo")      
+      private Evaluador evaluador; 
+
+      public Pc() {
+      }
+
+      public Pc(int pc_1, Long id_pc, Empresa empresa, Evaluador evaluador) {
+            this.pc_1 = pc_1;
+            this.id_pc = id_pc;
+            this.empresa = empresa;
+            this.evaluador = evaluador;
+      }
+
+      public int getPc_1() {
+            return pc_1;
+      }
+
+      public void setPc_1(int pc_1) {
+            this.pc_1 = pc_1;
+      }
+
+      public Long getId_pc() {
+            return id_pc;
+      }
+
+      public void setId_pc(Long id_pc) {
+            this.id_pc = id_pc;
+      }
+
+      public Empresa getEmpresa() {
+            return empresa;
+      }
+
+      public void setEmpresa(Empresa empresa) {
+            this.empresa = empresa;
+      }
+
+      public Evaluador getEvaluador() {
+            return evaluador;
+      }
+
+      public void setEvaluador(Evaluador evaluador) {
+            this.evaluador = evaluador;
+      }
+      
 }

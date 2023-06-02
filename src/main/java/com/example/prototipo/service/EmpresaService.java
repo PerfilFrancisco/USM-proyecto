@@ -11,7 +11,7 @@ public interface EmpresaService {
 
       Empresa crearEmpresa(Empresa empresa);
 
-      Empresa buscarPorId(Long id);
+      //Empresa buscarPorRut(String rut_empresa);
 
       Empresa buscarPorCorreo(String correo);
 }

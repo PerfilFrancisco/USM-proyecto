@@ -26,4 +26,8 @@ public class ProcesoClinico {
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "rut_empresa")
       private Empresa empresa;
+
+      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @JoinColumn(name = "correo")      
+      private Evaluador evaluador; 
 }

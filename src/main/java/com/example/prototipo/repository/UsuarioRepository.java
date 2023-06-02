@@ -3,15 +3,15 @@ package com.example.prototipo.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.prototipo.model.Usuario;
+import com.example.prototipo.model.Administrador;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
-      public Usuario findByContrasena(String contrasena);
+public interface UsuarioRepository extends JpaRepository<Administrador, Long>{
+      public Administrador findByContrasena(String contrasena);
 
-      public Usuario findByNombre(String nombre);
+      public Administrador findByNombre(String nombre);
 
-      public Usuario findByNombreAndContrasena(String nombre, String contrasena);
+      public Administrador findByNombreAndContrasena(String nombre, String contrasena);
 
       
 }
