@@ -23,9 +23,9 @@ public class Ra {
       private Long id_ra;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;
-      
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
+
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
       private Evaluador evaluador; 
@@ -33,12 +33,12 @@ public class Ra {
       public Ra() {
       }
 
-      public Ra(int ra_1, int ra_2, int ra_3, Long id_ra, Empresa empresa, Evaluador evaluador) {
+      public Ra(int ra_1, int ra_2, int ra_3, Long id_ra, Evaluacion evaluacion, Evaluador evaluador) {
             this.ra_1 = ra_1;
             this.ra_2 = ra_2;
             this.ra_3 = ra_3;
             this.id_ra = id_ra;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -72,14 +72,6 @@ public class Ra {
 
       public void setId_ra(Long id_ra) {
             this.id_ra = id_ra;
-      }
-
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
       }
 
       public Evaluador getEvaluador() {

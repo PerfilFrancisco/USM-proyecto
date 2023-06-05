@@ -24,8 +24,8 @@ public class Ac {
       private Long id_ac;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")      
-      private Empresa empresa;
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
 
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -33,12 +33,14 @@ public class Ac {
 
       public Ac(){}
 
-      public Ac(int ac_1, int ac_2, int ac_3, int ac_4, Empresa empresa) {
+      public Ac(int ac_1, int ac_2, int ac_3, int ac_4, Long id_ac, Evaluacion evaluacion, Evaluador evaluador) {
             this.ac_1 = ac_1;
             this.ac_2 = ac_2;
             this.ac_3 = ac_3;
             this.ac_4 = ac_4;
-            this.empresa = empresa;
+            this.id_ac = id_ac;
+            this.evaluacion = evaluacion;
+            this.evaluador = evaluador;
       }
 
       public int getAc_1() {
@@ -73,12 +75,30 @@ public class Ac {
             this.ac_4 = ac_4;
       }
 
-      public Empresa getEmpresa() {
-            return empresa;
+      public Long getId_ac() {
+            return id_ac;
       }
 
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
+      public void setId_ac(Long id_ac) {
+            this.id_ac = id_ac;
       }
-  
+
+      public Evaluacion getEvaluacion() {
+            return evaluacion;
+      }
+
+      public void setEvaluacion(Evaluacion evaluacion) {
+            this.evaluacion = evaluacion;
+      }
+
+      public Evaluador getEvaluador() {
+            return evaluador;
+      }
+
+      public void setEvaluador(Evaluador evaluador) {
+            this.evaluador = evaluador;
+      }
+
+
+
 }

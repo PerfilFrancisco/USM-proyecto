@@ -1,4 +1,4 @@
-package com.example.prototipo.service;
+package com.example.prototipo.ServiceImp;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.prototipo.model.Empresa;
 import com.example.prototipo.repository.EmpresaRepository;
+import com.example.prototipo.service.EmpresaService;
 
 @Service
 public class EmpresaServiceImp implements EmpresaService{
@@ -16,11 +17,8 @@ public class EmpresaServiceImp implements EmpresaService{
             this.empresaRepository = empresaRepository;
       }
 
-      
-
       @Override
-      public List<Empresa> buscarTodos(){
-            //List<Empresa> empresas = empresaRepository.findAll();
+      public List<Empresa> buscarTodos(){            
             return empresaRepository.findAll();
       }
 
@@ -31,22 +29,19 @@ public class EmpresaServiceImp implements EmpresaService{
             return empresaRepository.save(empresa);
             
       }
-      
-      // @Override
-      // public Empresa buscarPorRut(String rut_empresa) {
-      //       Empresa empresa = empresaRepository.findByrut_empresa(rut_empresa);
-      //       if (empresa != null) {
-      //             return empresa;
-      //       }
-      //       else{
-      //             return null;
-      //       }
-      // }
 
       @Override
       public Empresa buscarPorCorreo(String correo) {
             return empresaRepository.findByEmail(correo);
       }
 
+      @Override
+      public Empresa buscarPorNombre(String nombre) {
+            return empresaRepository.findByNombre(nombre);
+      }
 
+      @Override
+      public Empresa buscarPorRutEmpresa(String rutempresa) {
+            return empresaRepository.findByrutempresa(rutempresa);
+      }
 }

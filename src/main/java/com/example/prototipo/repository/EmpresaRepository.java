@@ -12,7 +12,9 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
       
       List<Empresa> findAll();
 
-      Empresa findByEmail(String email);
+      Empresa findByEmail(String email);      
 
-      //Empresa findByrut_empresa(String rut_empresa);
+      Empresa findByNombre(String nombre);
+
+      Empresa findByrutempresa(String rutempresa);
 }

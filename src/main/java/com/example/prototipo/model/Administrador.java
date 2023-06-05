@@ -6,6 +6,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -23,11 +25,12 @@ public class Administrador {
       private String contrasena;    
 
       @Id 
-      @Column()
+      @Column()    
+      @GeneratedValue(strategy = GenerationType.IDENTITY)  
       private Long id_usuario;
 
       @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
+      @JoinColumn(name = "rutempresa")
       private List<Empresa> empresa;
 
       public Administrador(){}

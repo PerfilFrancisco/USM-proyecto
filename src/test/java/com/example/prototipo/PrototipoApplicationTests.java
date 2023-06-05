@@ -30,8 +30,10 @@ public class PrototipoApplicationTests {
 	@BeforeEach
 	public void setUp() {
 	    // Configuración de Selenium
-	    System.setProperty("webdriver.chrome.driver", "./src/test/java/com/example/resources/chromedriver.exe");
+	    String projectPath = System.getProperty("user.dir");
+	    System.setProperty("webdriver.chrome.driver", projectPath + "./resources/chromedriver.exe");    
 	    driver = new ChromeDriver();
+	    
 	}
   
 	@AfterEach
@@ -44,20 +46,20 @@ public class PrototipoApplicationTests {
 	public void testCrearEmpresa() {
 	    // Crear una instancia de Empresa con datos de prueba
 	    Empresa empresa = new Empresa();	    
-	    empresa.setNombre_empresa("Empresa de Prueba");
-	    empresa.setRut_empresa("123456789");
+	    empresa.setnombre("Empresa de Prueba");
+	    empresa.setrutempresa("123456789");
 	    empresa.setEmail("email");
 	    // Ejecutar la lógica de la clase (por ejemplo, guardar la empresa en la base de datos)
-	    System.out.println("Empresa creada: " + empresa.getEmail());
+	    empresaService.crearEmpresa(empresa);
 	    // Navegar a la página de visualización de la empresa creada
 	    driver.get("http://localhost:8080/api/empresa/buscarCorreo/"+ empresa.getEmail());
   
 	    // Verificar que la página muestre correctamente los datos de la empresa
 	    WebElement nombreEmpresaElement = driver.findElement(By.id("nombre_empresa"));
-	    assertEquals(empresa.getNombre_empresa(), nombreEmpresaElement.getText());
+	    assertEquals(empresa.getnombre(), nombreEmpresaElement.getText());
   
 	    WebElement rutEmpresaElement = driver.findElement(By.id("rut_empresa"));
-	    assertEquals(empresa.getRut_empresa(), rutEmpresaElement.getText());
+	    assertEquals(empresa.getrutempresa(), rutEmpresaElement.getText());
 	}
   
 

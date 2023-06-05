@@ -2,7 +2,6 @@ package com.example.prototipo.service;
 
 import java.util.List;
 
-import com.example.prototipo.dto.UsuarioRegistroDTO;
 import com.example.prototipo.model.Administrador;
 
 public interface UsuarioService {

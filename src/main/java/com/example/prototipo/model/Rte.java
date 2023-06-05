@@ -24,8 +24,8 @@ public class Rte {
       private Long id_rte;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
 
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -34,13 +34,13 @@ public class Rte {
       public Rte() {
       }
 
-      public Rte(int rte_1, int rte_2, int rte_3, int rte_4, Long id_rte, Empresa empresa, Evaluador evaluador) {
+      public Rte(int rte_1, int rte_2, int rte_3, int rte_4, Long id_rte, Evaluacion evaluacion, Evaluador evaluador) {
             this.rte_1 = rte_1;
             this.rte_2 = rte_2;
             this.rte_3 = rte_3;
             this.rte_4 = rte_4;
             this.id_rte = id_rte;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -82,14 +82,6 @@ public class Rte {
 
       public void setId_rte(Long id_rte) {
             this.id_rte = id_rte;
-      }
-
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
       }
 
       public Evaluador getEvaluador() {

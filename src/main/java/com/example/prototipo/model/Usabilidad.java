@@ -4,6 +4,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -22,11 +24,12 @@ public class Usabilidad {
 
       @Id
       @Column
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id_usabilidad;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -36,13 +39,13 @@ public class Usabilidad {
       }
 
       public Usabilidad(int pruebas_usuario, int errores_usuario, int capacidad_aprendizaje, int accesibilidad,
-                  Long id_usabilidad, Empresa empresa, Evaluador evaluador) {
+                  Long id_usabilidad, Evaluacion evaluacion, Evaluador evaluador) {
             this.pruebas_usuario = pruebas_usuario;
             this.errores_usuario = errores_usuario;
             this.capacidad_aprendizaje = capacidad_aprendizaje;
             this.accesibilidad = accesibilidad;
             this.id_usabilidad = id_usabilidad;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -86,13 +89,6 @@ public class Usabilidad {
             this.id_usabilidad = id_usabilidad;
       }
 
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
-      }
 
       public Evaluador getEvaluador() {
             return evaluador;
@@ -101,5 +97,14 @@ public class Usabilidad {
       public void setEvaluador(Evaluador evaluador) {
             this.evaluador = evaluador;
       }
+
+      public Evaluacion getEvaluacion() {
+            return evaluacion;
+      }
+
+      public void setEvaluacion(Evaluacion evaluacion) {
+            this.evaluacion = evaluacion;
+      }
+ 
       
 }

@@ -3,6 +3,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -25,11 +27,13 @@ public class Seguridad {
 
       @Id
       @Column
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id_seguridad;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
+
 
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -39,7 +43,7 @@ public class Seguridad {
       }
 
       public Seguridad(int autenticacion, int autorizacion, int criptografia, int gestion_contrasenas, int integridad,
-                  int autenticidad, int gestion_riesgo, int documentacion, Long id_seguridad, Empresa empresa,
+                  int autenticidad, int gestion_riesgo, int documentacion, Long id_seguridad, Evaluacion evaluacion,
                   Evaluador evaluador) {
             this.autenticacion = autenticacion;
             this.autorizacion = autorizacion;
@@ -50,7 +54,7 @@ public class Seguridad {
             this.gestion_riesgo = gestion_riesgo;
             this.documentacion = documentacion;
             this.id_seguridad = id_seguridad;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -126,14 +130,6 @@ public class Seguridad {
             this.id_seguridad = id_seguridad;
       }
 
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
-      }
-
       public Evaluador getEvaluador() {
             return evaluador;
       }
@@ -141,5 +137,14 @@ public class Seguridad {
       public void setEvaluador(Evaluador evaluador) {
             this.evaluador = evaluador;
       }
+
+      public Evaluacion getEvaluacion() {
+            return evaluacion;
+      }
+
+      public void setEvaluacion(Evaluacion evaluacion) {
+            this.evaluacion = evaluacion;
+      }
       
+
 }

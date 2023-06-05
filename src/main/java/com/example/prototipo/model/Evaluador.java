@@ -62,7 +62,7 @@ public class Evaluador {
       private List<Usabilidad> usabilidades;      
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
+      @JoinColumn(name = "rutEmpresa")
       private Empresa empresa;
 
       public Evaluador(){}

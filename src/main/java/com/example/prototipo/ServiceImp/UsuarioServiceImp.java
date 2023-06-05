@@ -1,4 +1,4 @@
-package com.example.prototipo.service;
+package com.example.prototipo.ServiceImp;
 
 
 
@@ -10,10 +10,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.prototipo.dto.UsuarioRegistroDTO;
-
 import com.example.prototipo.model.Administrador;
 import com.example.prototipo.repository.UsuarioRepository;
+import com.example.prototipo.service.UsuarioService;
 
 
 @Service

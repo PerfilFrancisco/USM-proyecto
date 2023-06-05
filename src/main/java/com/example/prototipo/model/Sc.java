@@ -27,8 +27,8 @@ public class Sc {
       private Long id_sc;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;
 
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -37,7 +37,7 @@ public class Sc {
       public Sc() {
       }
 
-      public Sc(int sc_1, int sc_2, int sc_3, int sc_4, int sc_5, int sc_6, int sc_7, Long id_sc, Empresa empresa,
+      public Sc(int sc_1, int sc_2, int sc_3, int sc_4, int sc_5, int sc_6, int sc_7, Long id_sc, Evaluacion evaluacion,
                   Evaluador evaluador) {
             this.sc_1 = sc_1;
             this.sc_2 = sc_2;
@@ -47,7 +47,7 @@ public class Sc {
             this.sc_6 = sc_6;
             this.sc_7 = sc_7;
             this.id_sc = id_sc;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -113,14 +113,6 @@ public class Sc {
 
       public void setId_sc(Long id_sc) {
             this.id_sc = id_sc;
-      }
-
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
       }
 
       public Evaluador getEvaluador() {

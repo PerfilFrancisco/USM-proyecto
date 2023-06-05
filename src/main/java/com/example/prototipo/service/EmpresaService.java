@@ -9,9 +9,11 @@ public interface EmpresaService {
       
       List<Empresa> buscarTodos();
 
-      Empresa crearEmpresa(Empresa empresa);
-
-      //Empresa buscarPorRut(String rut_empresa);
+      Empresa crearEmpresa(Empresa empresa);      
 
       Empresa buscarPorCorreo(String correo);
+
+      Empresa buscarPorNombre(String nombre_empresa);
+
+      Empresa buscarPorRutEmpresa(String rutempresa);
 }

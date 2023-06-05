@@ -1,37 +1,41 @@
 package com.example.prototipo.model;
-
-import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "empresa")
-public class Empresa implements Serializable{
+public class Empresa{
        
-      @Column(length = 45)      
-      private String nombre_empresa;
+      @Column(length = 45,name = "nombre")      
+      private String nombre;
+      @Column(length = 45,name = "etapa_sello")   
       private String etapa_sello;
+      @Column(length = 45,name = "email")   
       private String email;
+      @Column(length = 45,name = "nombre_contraparte")   
       private String nombre_contraparte;
+      @Column(length = 45,name = "fecha_ingreso")   
       private String fecha_ingreso;
+      @Column(length = 45,name = "rut_dni")   
       private String rut_dni;
+      @Column(length = 45,name = "razon_social")   
       private String razon_social;
+      @Column(length = 45,name = "tipo_sello")   
       private String tipo_sello;
-      private String telefono_contraparte;
-      private Boolean empresaEvaluada;
+      @Column(length = 45,name = "telefonocontraparte")   
+      private String telefonocontraparte;
+      @Column(name = "empresaevaluada")
+      private Boolean empresaevaluada;
 
 
       @Temporal(TemporalType.DATE)
@@ -47,62 +51,28 @@ public class Empresa implements Serializable{
       private Date fecha_otorgamiento;
       
       @Id
-      @Column(length = 45)
-      private String rut_empresa;
+      @Column(length = 45,name = "rutempresa")
+      private String rutempresa;
 
       @ManyToOne( cascade = CascadeType.ALL)
+      @JoinColumn(name = "id_usuario")
       private Administrador administrador;
 
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Evaluador> evaluadores;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Ac> acs;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Compatibilidad> compatibilidades;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Fiabilidad> fiabilidades;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Pc> pcs;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<ProcesoClinico> procesosClinicos;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Ra> ras;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Rte> rtes;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Sc> scs;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Seguridad> seguridades;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Ua> uas;
-
-      @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
-      private List<Usabilidad> usabilidades;      
+      @ManyToOne( cascade = CascadeType.ALL)
+      @JoinColumn(name = "idEvaluacion")
+      private Evaluacion evaluacion;
 
 
       public Empresa() {}      
 
-      public Empresa(String nombre_empresa, String etapa_sello, String email, String nombre_contraparte,
+      public Empresa(String nombre, String etapa_sello, String email, String nombre_contraparte,
                   String fecha_ingreso, String rut_dni, String razon_social, String tipo_sello,
-                  String telefono_contraparte, Boolean empresaEvaluada, Date fecha_nda, Date fAcceso_herramienta,
+                  String telefonoContraparte, Boolean empresaEvaluada, Date fecha_nda, Date fAcceso_herramienta,
                   Date fCreacion_formulario, Date fEnvio_formulario, Date fecha_demostracion,
                   Date fEntrega_inf_evaluadores, Date fEntrega_informe, Date fEntrega_evidencia_final,
-                  Date fIntegracion_fonasa, Date fecha_otorgamiento, String rut_empresa,
-                  Administrador administrador, List<Evaluador> evaluadores, List<Ac> acs,
-                  List<Compatibilidad> compatibilidades, List<Fiabilidad> fiabilidades, List<Pc> pcs,
-                  List<ProcesoClinico> procesosClinicos, List<Ra> ras, List<Rte> rtes, List<Sc> scs,
-                  List<Seguridad> seguridades, List<Ua> uas, List<Usabilidad> usabilidades) {
-            this.nombre_empresa = nombre_empresa;
+                  Date fIntegracion_fonasa, Date fecha_otorgamiento, String rutEmpresa,
+                  Administrador administrador, List<Evaluador> evaluadores) {
+            this.nombre = nombre;
             this.etapa_sello = etapa_sello;
             this.email = email;
             this.nombre_contraparte = nombre_contraparte;
@@ -110,8 +80,8 @@ public class Empresa implements Serializable{
             this.rut_dni = rut_dni;
             this.razon_social = razon_social;
             this.tipo_sello = tipo_sello;
-            this.telefono_contraparte = telefono_contraparte;
-            this.empresaEvaluada = empresaEvaluada;
+            this.telefonocontraparte = telefonoContraparte;
+            this.empresaevaluada = empresaEvaluada;
             this.fecha_nda = fecha_nda;
             this.fAcceso_herramienta = fAcceso_herramienta;
             this.fCreacion_formulario = fCreacion_formulario;
@@ -122,60 +92,41 @@ public class Empresa implements Serializable{
             this.fEntrega_evidencia_final = fEntrega_evidencia_final;
             this.fIntegracion_fonasa = fIntegracion_fonasa;
             this.fecha_otorgamiento = fecha_otorgamiento;
-            this.rut_empresa = rut_empresa;
+            this.rutempresa = rutEmpresa;
             this.administrador = administrador;
-            this.evaluadores = evaluadores;
-            this.acs = acs;
-            this.compatibilidades = compatibilidades;
-            this.fiabilidades = fiabilidades;
-            this.pcs = pcs;
-            this.procesosClinicos = procesosClinicos;
-            this.ras = ras;
-            this.rtes = rtes;
-            this.scs = scs;
-            this.seguridades = seguridades;
-            this.uas = uas;
-            this.usabilidades = usabilidades;
-      }
 
-      public List<Evaluador> getEvaluadores() {
-            return evaluadores;
-      }
-
-      public void setEvaluadores(List<Evaluador> evaluadores) {
-            this.evaluadores = evaluadores;
       }
 
       public Boolean getEmpresaEvaluada() {
-            return empresaEvaluada;
+            return empresaevaluada;
       }
 
-      public void setEmpresaEvaluada(Boolean empresaEvaluada) {
-            this.empresaEvaluada = empresaEvaluada;
+      public void setempresaevaluada(Boolean empresaevaluada) {
+            this.empresaevaluada = empresaevaluada;
       }
 
-      public String getRut_empresa() {
-            return rut_empresa;
+      public String getrutempresa() {
+            return rutempresa;
       }
 
-      public void setRut_empresa(String rut_empresa){
-            this.rut_empresa = rut_empresa;
+      public void setrutempresa(String rutempresa){
+            this.rutempresa = rutempresa;
       }
 
       public String getTelefono(){
-            return telefono_contraparte;
+            return telefonocontraparte;
       }
 
-      public void setTelefono(String telefono_contraparte){
-            this.telefono_contraparte = telefono_contraparte;
+      public void setTelefono(String telefonoContraparte){
+            this.telefonocontraparte = telefonoContraparte;
       }
 
-      public String getNombre_empresa() {
-            return nombre_empresa;
+      public String getnombre() {
+            return nombre;
       }
 
-      public void setNombre_empresa(String nombre_empresa) {
-            this.nombre_empresa = nombre_empresa;
+      public void setnombre(String nombre) {
+            this.nombre = nombre;
       }
 
       public String getEtapa_sello() {

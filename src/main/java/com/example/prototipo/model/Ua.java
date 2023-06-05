@@ -23,8 +23,8 @@ public class Ua {
       private Long id_ua;
       
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-      @JoinColumn(name = "rut_empresa")
-      private Empresa empresa;      
+      @JoinColumn(name = "idevaluacion")      
+      private Evaluacion evaluacion;     
 
       @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "correo")      
@@ -33,13 +33,13 @@ public class Ua {
       public Ua() {
       }
 
-      public Ua(int ua_1, int ua_2, int ua_3, int ua_4, Long id_ua, Empresa empresa, Evaluador evaluador) {
+      public Ua(int ua_1, int ua_2, int ua_3, int ua_4, Long id_ua, Evaluacion evaluacion, Evaluador evaluador) {
             this.ua_1 = ua_1;
             this.ua_2 = ua_2;
             this.ua_3 = ua_3;
             this.ua_4 = ua_4;
             this.id_ua = id_ua;
-            this.empresa = empresa;
+            this.evaluacion = evaluacion;
             this.evaluador = evaluador;
       }
 
@@ -81,14 +81,6 @@ public class Ua {
 
       public void setId_ua(Long id_ua) {
             this.id_ua = id_ua;
-      }
-
-      public Empresa getEmpresa() {
-            return empresa;
-      }
-
-      public void setEmpresa(Empresa empresa) {
-            this.empresa = empresa;
       }
 
       public Evaluador getEvaluador() {
