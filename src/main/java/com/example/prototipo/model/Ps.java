@@ -22,7 +22,7 @@ public class Ps {
       @Column
       private Long id_ps;
       
-      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "idevaluacion")      
       private Evaluacion evaluacion;
 

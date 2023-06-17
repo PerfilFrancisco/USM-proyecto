@@ -17,4 +17,5 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long>{
       Empresa findByNombre(String nombre);
 
       Empresa findByrutempresa(String rutempresa);
+
 }

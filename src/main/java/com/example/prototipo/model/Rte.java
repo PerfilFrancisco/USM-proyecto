@@ -23,7 +23,7 @@ public class Rte {
       @Column
       private Long id_rte;
       
-      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "idevaluacion")      
       private Evaluacion evaluacion;
 

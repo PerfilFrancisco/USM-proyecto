@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +23,7 @@ public class Ua {
       @Column
       private Long id_ua;
       
-      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "idevaluacion")      
       private Evaluacion evaluacion;     
 

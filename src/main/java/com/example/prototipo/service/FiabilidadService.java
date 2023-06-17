@@ -22,4 +22,8 @@ public class FiabilidadService {
             fiabilidadRepository.deleteById(idFiabilidad);
       }
       
+      public Fiabilidad actualizarFiabilidad(Fiabilidad fiabilidad) {
+            return fiabilidadRepository.save(fiabilidad);
+      }
+      
 }

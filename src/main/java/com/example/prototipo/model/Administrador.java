@@ -39,7 +39,7 @@ public class Administrador {
             this.nombre = nombre;
             this.contrasena = contrasena;
       }      
-
+ 
       public Administrador(String nombre, String apellido, String correo, String rol, String contrasena,
                   Long id_usuario, List<Empresa> empresa) {
             this.nombre = nombre;

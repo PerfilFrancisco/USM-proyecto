@@ -21,4 +21,9 @@ public class ProcesoClinicoService {
       public void eliminarProcesoClinico(Long idProcesoClinico) {
             procesoClinicoRepository.deleteById(idProcesoClinico);
       }
+
+      public ProcesoClinico actualizarProcesoClinico(ProcesoClinico procesoClinico) {
+            return procesoClinicoRepository.save(procesoClinico);
+      }
+
 }

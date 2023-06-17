@@ -22,4 +22,7 @@ public class UsabilidadService {
             usabilidadRepository.deleteById(idUsabilidad);
       }
       
+      public Usabilidad actualizarUsabilidad(Usabilidad usabilidad) {
+            return usabilidadRepository.save(usabilidad);
+      }
 }

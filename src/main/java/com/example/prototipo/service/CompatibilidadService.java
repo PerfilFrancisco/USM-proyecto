@@ -21,4 +21,8 @@ public class CompatibilidadService {
       public void eliminarCompatibilidad(Long idCompatibilidad) {
             compatibilidadRepository.deleteById(idCompatibilidad);
       }
+
+      public Compatibilidad actualizarCompatibilidad(Compatibilidad compatibilidad) {
+            return compatibilidadRepository.save(compatibilidad);
+      }
 }

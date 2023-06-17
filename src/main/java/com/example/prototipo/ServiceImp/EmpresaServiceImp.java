@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.prototipo.model.Empresa;
+import com.example.prototipo.model.Evaluacion;
 import com.example.prototipo.repository.EmpresaRepository;
 import com.example.prototipo.service.EmpresaService;
 
@@ -44,4 +45,17 @@ public class EmpresaServiceImp implements EmpresaService{
       public Empresa buscarPorRutEmpresa(String rutempresa) {
             return empresaRepository.findByrutempresa(rutempresa);
       }
+
+      @Override
+      public Empresa asignarEvaluacion(Evaluacion evaluacion) {
+            // TODO Auto-generated method stub
+            return empresaRepository.save(evaluacion.getEmpresa());            
+      }
+
+      @Override
+      public void eliminarEmpresa(Empresa empresa) {
+            empresaRepository.delete(empresa);
+            
+      }
+
 }

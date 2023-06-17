@@ -2,6 +2,7 @@ package com.example.prototipo.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.prototipo.model.Seguridad;
 import com.example.prototipo.repository.SeguridadRepository;
 
 @Service
@@ -13,7 +14,7 @@ public class SeguridadService {
             this.seguridadRepository = seguridadRepository;
       }
 
-      public void crearSeguridad(com.example.prototipo.model.Seguridad seguridad) {
+      public void crearSeguridad(Seguridad seguridad) {
             seguridadRepository.save(seguridad);
       }
 
@@ -21,6 +22,8 @@ public class SeguridadService {
             seguridadRepository.deleteById(idSeguridad);
       }
 
-
+      public void actualizarSeguridad(Seguridad seguridad) {
+            seguridadRepository.save(seguridad);
+      }
 
 }

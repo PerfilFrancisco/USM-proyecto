@@ -1,6 +1,9 @@
 package com.example.prototipo.model;
 import org.checkerframework.checker.units.qual.g;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +18,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "proceso_clinico")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+      property = "id_proceso_clinico")
 public class ProcesoClinico {
       
       @Column
@@ -28,7 +33,7 @@ public class ProcesoClinico {
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id_proceso_clinico;
       
-      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "idevaluacion")      
       private Evaluacion evaluacion;
       

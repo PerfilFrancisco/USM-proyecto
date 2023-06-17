@@ -1,5 +1,8 @@
 package com.example.prototipo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +17,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usabilidad")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, 
+      property = "id_usabilidad")
 public class Usabilidad {
       
       @Column
@@ -27,7 +32,7 @@ public class Usabilidad {
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id_usabilidad;
       
-      @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+      @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
       @JoinColumn(name = "idevaluacion")      
       private Evaluacion evaluacion;
       

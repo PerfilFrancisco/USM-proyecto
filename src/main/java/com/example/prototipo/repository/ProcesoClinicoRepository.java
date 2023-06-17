@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.prototipo.model.ProcesoClinico;
 
 @Repository
-public interface ProcesoClinicoRepository extends JpaRepository<ProcesoClinico, Long>{      
+public interface ProcesoClinicoRepository extends JpaRepository<ProcesoClinico, Long>{ 
+            
 }

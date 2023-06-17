@@ -2,18 +2,24 @@ package com.example.prototipo.model;
 import java.sql.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "empresa")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+      property = "rutempresa")
 public class Empresa{
        
       @Column(length = 45,name = "nombre")      
@@ -58,7 +64,7 @@ public class Empresa{
       @JoinColumn(name = "id_usuario")
       private Administrador administrador;
 
-      @ManyToOne( cascade = CascadeType.ALL)
+      @OneToOne( cascade = CascadeType.ALL)
       @JoinColumn(name = "idEvaluacion")
       private Evaluacion evaluacion;
 
