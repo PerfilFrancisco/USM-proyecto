@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,119 +81,127 @@ public class Controladores {
       }
 
       @GetMapping("/buscarCorreo/{email}")
-      public ResponseEntity<Empresa> findByEmail(@PathVariable String email){
-            Empresa empresa = empresaService.buscarPorCorreo(email);
-            if (empresa != null) {
-                  return ResponseEntity.ok(empresa);
-            }
-            else{
-                  return ResponseEntity.notFound().build();
-            }
-      }      
+      public Evaluacion obtenerEvaluacion(@PathVariable String email) {                         
+            Evaluacion evaluacion = evaluacionService.getEvaluacionPorEmail(email);
+            System.out.println(evaluacion.getEmpresa().getEmail());
+            return evaluacion;
+
+      }
+      @GetMapping("/graficos")
+      public ResponseEntity<List<Evaluacion>> graficos(){
+            List<Evaluacion> evaluaciones = evaluacionService.getEvaluaciones();
+            return ResponseEntity.ok(evaluaciones);
+      }
 
       //######################
-      // zona de busqueda y creacion de empresas | posts
+      // zona de busqueda y creacion de empresas | posts y puts
       //######################
 
-      @PostMapping("/crearEvaluacion/{rutempresa}")
-      public ResponseEntity<String> crearEvaluacion(@PathVariable String rutempresa, @RequestBody Evaluacion evaluacion){
+      @PutMapping("/Edicion/{email}")
+      public ResponseEntity<String> actualizarEmpresa(@PathVariable String email, @RequestBody Empresa empresa){
 
-            // primero buscar la empresa a traves de su rut y luego guardar evaluacion en la base de datos
-            evaluacion.setEmpresa(empresaService.buscarPorRutEmpresa(rutempresa));
-            System.out.println(evaluacion.getEmpresa().getrutempresa());
-            evaluacionService.crearEvaluacion(evaluacion);
-            /////////////////////////////////////////////////
+            // luego buscar la empresa existente
+            Empresa empresaExistente = empresaService.buscarPorCorreo(email);
 
-
-            // proceso clinico
-
-            ProcesoClinico formproc = evaluacion.getFormproce();            
-            formproc.setEvaluacion(evaluacion);
-            
-            // guardar proceso clinico en la base de datos
-            procesoClinicoService.crearProcesoClinico(formproc);            
-
-            int Eficiencia_eficacia = formproc.getEficiencia_eficacia();
-            int seguridad_asistencial = formproc.getSeguridad_asistencial();
-            int centro_paciente = formproc.getCentro_paciente();
-            int registro_clinico = formproc.getRegistro_clinico();
-
-            System.out.println(Eficiencia_eficacia);
-            System.out.println(seguridad_asistencial);
-            /////////////////////////////////////////////////////////
-
-
-            // compatibilidad
-
-            Compatibilidad formcomp = evaluacion.getFormcompa();
-            formcomp.setEvaluacion(evaluacion);
-
-            // guardar compatibilidad en la base de datos
-            compatibilidadService.crearCompatibilidad(formcomp);
-
-            int interoperabilidad = formcomp.getInteroperabilidad();
-            /////////////////////////////////////////////////////////
-
+            // luego actualizar los campos de la empresa existente con los valores de la empresa actualizada
+            empresaExistente.setnombre(empresa.getnombre());
+            empresaExistente.setEmail(empresa.getEmail());
+            empresaExistente.setTelefono(empresa.getTelefono());
+            empresaExistente.setEtapa_sello(empresa.getEtapa_sello());
+            empresaExistente.setNombre_contraparte(empresa.getNombre_contraparte());
+            empresaExistente.setFecha_ingreso(empresa.getFecha_ingreso());
+            empresaExistente.setRut_dni(empresa.getRut_dni());
+            empresaExistente.setRazon_social(empresa.getRazon_social());
+            empresaExistente.setTipo_sello(empresa.getTipo_sello());
+            empresaExistente.setrutempresa(empresa.getrutempresa());
+            return ResponseEntity.status(HttpStatus.OK).body("Evaluación actualizada exitosamente");
+      }
       
-            // usabilidad
 
-            Usabilidad formusa = evaluacion.getFormusa();
-            formusa.setEvaluacion(evaluacion);
+      @PutMapping("/actualizarEvaluacionClinica/{email}")
+      public ResponseEntity<String> actualizarEvaluacion(@PathVariable String email, @RequestBody Evaluacion evaluacionActualizada){            
+                              
+            // luego buscar la evaluación existente asociada a la empresa
+            Evaluacion evaluacionExistente = evaluacionService.getEvaluacionPorEmail(email);                        
+            if (evaluacionExistente == null) {
+                  return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluación no encontrada");
+            }
 
-            // guardar usabilidad en la base de datos
-            usabilidadService.crearUsabilidad(formusa);
+            // luego actualizar los campos de la evaluación existente con los valores de la evaluación actualizada
+            evaluacionExistente.setFormproce(evaluacionActualizada.getFormproce());
+            evaluacionExistente.setFormcompa(evaluacionActualizada.getFormcompa());
+            evaluacionExistente.setFormusa(evaluacionActualizada.getFormusa());
+            evaluacionExistente.setFormfia(evaluacionActualizada.getFormfia());
+            evaluacionExistente.setFormsegu(evaluacionActualizada.getFormsegu());         
+            
+            // // // luego evitar que se sobreescriban las tablas asociadas a la evaluacion
+            // procesoClinicoService.actualizarProcesoClinico(evaluacionExistente.getFormproce());
+            // compatibilidadService.actualizarCompatibilidad(evaluacionExistente.getFormcompa());
+            // usabilidadService.actualizarUsabilidad(evaluacionExistente.getFormusa());
+            // fiabilidadService.actualizarFiabilidad(evaluacionExistente.getFormfia());
+            // seguridadService.actualizarSeguridad(evaluacionExistente.getFormsegu());
+            
+            // guardar la evaluación actualizada en la base de datos
+            evaluacionService.saveEvaluacion(evaluacionExistente);
 
-            int prueba_usuario = formusa.getPruebas_usuario();
-            int errores_usuario = formusa.getErrores_usuario();
-            int capacidad_aprendizaje = formusa.getCapacidad_aprendizaje();
-            int accesibilidad = formusa.getAccesibilidad();
-            /////////////////////////////////////////////////////////
+            return ResponseEntity.status(HttpStatus.OK).body("Evaluación Clinica actualizada exitosamente");
+      }
 
+      /*
+       * actualizar evaluacion tecnica con sus entidades correspondientes, en repository modificar las clases que no 
+       * esten completas y tambien en el service, ya que no todos tienen esa comunicacion que mencione con el JPA
+       */
 
-            // fiabilidad
+      @PutMapping("/actualizarEvaluacionTecnica/{email}")
+      public ResponseEntity<String> actualizarEvaluacionTecnica(@PathVariable String email, @RequestBody Evaluacion evaluacionActualizada){            
+                              
+            // luego buscar la evaluación existente asociada a la empresa
+            Evaluacion evaluacionExistente = evaluacionService.getEvaluacionPorEmail(email);                        
+            if (evaluacionExistente == null) {
+                  return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluación no encontrada");
+            }            
+            
+            // luego actualizar los campos de la evaluación existente con los valores de la evaluación actualizada
+            evaluacionExistente.setAcs(evaluacionActualizada.getAcs());
+            evaluacionExistente.setPcs(evaluacionActualizada.getPcs());
+            
+            
+            // guardar la evaluación actualizada en la base de datos
+            evaluacionService.saveEvaluacion(evaluacionExistente);
 
-            Fiabilidad formfia = evaluacion.getFormfia();
-            formfia.setEvaluacion(evaluacion);
-
-            // guardar fiabilidad en la base de datos
-            fiabilidadService.crearFiabilidad(formfia);
-
-            int eficienciaDesempeno = formfia.getEficiencia_desempeno();
-            int toleranciaFallos = formfia.getTolerancia_fallos();
-            int capacidadRecuperacion = formfia.getCapacidad_recuperacion();
-            int arquitectura = formfia.getArquitectura();
-            int otrosAspectos = formfia.getOtros_aspectos();            
-            /////////////////////////////////////////////////////////
-
-
-            // seguridad
-
-            Seguridad formseg = evaluacion.getFormsegu();
-            formseg.setEvaluacion(evaluacion);
-
-            // guardar seguridad en la base de datos
-            seguridadService.crearSeguridad(formseg);
-
-            int autenticacion = formseg.getAutenticacion();
-            int autorizacion = formseg.getAutorizacion();
-            int criptografia = formseg.getCriptografia();
-            int gestion_contrasenas = formseg.getGestion_contrasenas();
-            int integridad = formseg.getIntegridad();
-            int autenticidad = formseg.getAutenticidad();
-            int gestion_riesgo = formseg.getGestion_riesgo();
-            int documentacion = formseg.getDocumentacion();
-            /////////////////////////////////////////////////
-
-            return ResponseEntity.status(HttpStatus.CREATED).body("Evaluación creada exitosamente");
+            return ResponseEntity.status(HttpStatus.OK).body("Evaluación Tecnica actualizada exitosamente");
       }
 
       @PostMapping("/crearEmpresa")
       Empresa crearEmpresa(@RequestBody Empresa empresa) {
             //i want to see if the empresa is not in the database            
-            Empresa validacion = empresaService.buscarPorCorreo(empresa.getEmail());
-            System.out.println(empresa.getEmail());
-            if(validacion != empresa){
+            Empresa validacion = empresaService.buscarPorCorreo(empresa.getEmail());                   
+            if(validacion != empresa){       
+                  Evaluacion evaluacion = new Evaluacion();                
+                  Fiabilidad fiabilidad = new Fiabilidad();
+                  ProcesoClinico procesoClinico = new ProcesoClinico();
+                  Compatibilidad compatibilidad = new Compatibilidad();
+                  Usabilidad usabilidad = new Usabilidad();
+                  Seguridad seguridad = new Seguridad();    
+
                   empresa.setempresaevaluada(false);
+
+                  
+                  evaluacion.setEmpresa(empresa);
+                  evaluacion.setFormfia(fiabilidad);
+                  evaluacion.setFormcompa(compatibilidad);
+                  evaluacion.setFormproce(procesoClinico);
+                  evaluacion.setFormsegu(seguridad);
+                  evaluacion.setFormusa(usabilidad);
+
+                  fiabilidad.setEvaluacion(evaluacion);
+                  procesoClinico.setEvaluacion(evaluacion);
+                  compatibilidad.setEvaluacion(evaluacion);
+                  usabilidad.setEvaluacion(evaluacion);
+                  seguridad.setEvaluacion(evaluacion);
+
+                  evaluacionService.saveEvaluacion(evaluacion);
+
                   return empresaService.crearEmpresa(empresa);
             }
             else {
@@ -200,10 +210,23 @@ public class Controladores {
             }
       }
 
+      // i want to delete una empresa
+      @DeleteMapping("/eliminarEmpresa/{email}")
+      public ResponseEntity<String> eliminarEmpresa(@PathVariable String email) {
+            // i want to see if the empresa is in the database
+            Empresa empresa = empresaService.buscarPorCorreo(email);
+            if (empresa == null) {
+                  return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada");
+            }
+            // i want to delete the empresa
+            empresaService.eliminarEmpresa(empresa);
+            return ResponseEntity.status(HttpStatus.OK).body("Empresa eliminada exitosamente");
+      }
 
-      //######################
+
+      //##################################################################
       // zona de usuario | variables
-      //######################
+      //##################################################################
       @Autowired
       private UsuarioService usuarioService;
 
