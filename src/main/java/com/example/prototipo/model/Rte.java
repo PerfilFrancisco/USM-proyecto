@@ -3,6 +3,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +23,7 @@ public class Rte {
       
       @Id
       @Column
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
       private Long id_rte;
       
       @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
@@ -92,4 +95,11 @@ public class Rte {
             this.evaluador = evaluador;
       }
       
+      public Evaluacion getEvaluacion() {
+            return evaluacion;
+      }
+
+      public void setEvaluacion(Evaluacion evaluacion) {
+            this.evaluacion = evaluacion;
+      }
 }

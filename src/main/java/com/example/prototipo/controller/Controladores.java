@@ -18,17 +18,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.prototipo.model.Empresa;
 import com.example.prototipo.model.Evaluacion;
 import com.example.prototipo.model.Fiabilidad;
+import com.example.prototipo.model.Pc;
 import com.example.prototipo.model.ProcesoClinico;
+import com.example.prototipo.model.Ps;
+import com.example.prototipo.model.Ra;
+import com.example.prototipo.model.Rte;
+import com.example.prototipo.model.Sc;
 import com.example.prototipo.model.Seguridad;
+import com.example.prototipo.model.Ua;
 import com.example.prototipo.model.Usabilidad;
+import com.example.prototipo.model.Ac;
 import com.example.prototipo.model.Administrador;
 import com.example.prototipo.model.Compatibilidad;
+import com.example.prototipo.service.AcService;
 import com.example.prototipo.service.CompatibilidadService;
 import com.example.prototipo.service.EmpresaService;
 import com.example.prototipo.service.EvaluacionService;
 import com.example.prototipo.service.FiabilidadService;
+import com.example.prototipo.service.PcService;
 import com.example.prototipo.service.ProcesoClinicoService;
+import com.example.prototipo.service.PsService;
+import com.example.prototipo.service.RaService;
+import com.example.prototipo.service.RteService;
+import com.example.prototipo.service.ScService;
 import com.example.prototipo.service.SeguridadService;
+import com.example.prototipo.service.UaService;
 import com.example.prototipo.service.UsabilidadService;
 import com.example.prototipo.service.UsuarioService;
 
@@ -62,6 +76,27 @@ public class Controladores {
 
       @Autowired
       private EvaluacionService evaluacionService;
+
+      @Autowired
+      private AcService acService;
+
+      @Autowired
+      private PcService pcService;
+
+      @Autowired
+      private PsService psService;
+
+      @Autowired
+      private RaService raService;
+
+      @Autowired
+      private RteService rteService;
+
+      @Autowired
+      private ScService scService;
+
+      @Autowired
+      private UaService uaService;
 
       ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -126,7 +161,7 @@ public class Controladores {
             if (evaluacionExistente == null) {
                   return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluación no encontrada");
             }
-
+            
             // luego actualizar los campos de la evaluación existente con los valores de la evaluación actualizada
             evaluacionExistente.setFormproce(evaluacionActualizada.getFormproce());
             evaluacionExistente.setFormcompa(evaluacionActualizada.getFormcompa());
@@ -135,11 +170,11 @@ public class Controladores {
             evaluacionExistente.setFormsegu(evaluacionActualizada.getFormsegu());         
             
             // // // luego evitar que se sobreescriban las tablas asociadas a la evaluacion
-            // procesoClinicoService.actualizarProcesoClinico(evaluacionExistente.getFormproce());
-            // compatibilidadService.actualizarCompatibilidad(evaluacionExistente.getFormcompa());
-            // usabilidadService.actualizarUsabilidad(evaluacionExistente.getFormusa());
-            // fiabilidadService.actualizarFiabilidad(evaluacionExistente.getFormfia());
-            // seguridadService.actualizarSeguridad(evaluacionExistente.getFormsegu());
+            procesoClinicoService.actualizarProcesoClinico(evaluacionExistente.getFormproce());
+            compatibilidadService.actualizarCompatibilidad(evaluacionExistente.getFormcompa());
+            usabilidadService.actualizarUsabilidad(evaluacionExistente.getFormusa());
+            fiabilidadService.actualizarFiabilidad(evaluacionExistente.getFormfia());
+            seguridadService.actualizarSeguridad(evaluacionExistente.getFormsegu());
             
             // guardar la evaluación actualizada en la base de datos
             evaluacionService.saveEvaluacion(evaluacionExistente);
@@ -153,18 +188,37 @@ public class Controladores {
        */
 
       @PutMapping("/actualizarEvaluacionTecnica/{email}")
-      public ResponseEntity<String> actualizarEvaluacionTecnica(@PathVariable String email, @RequestBody Evaluacion evaluacionActualizada){            
-                              
+      public ResponseEntity<String> actualizarEvaluacionTecnica(@PathVariable String email, @RequestBody Evaluacion evaluacionTecnica){            
+            
             // luego buscar la evaluación existente asociada a la empresa
-            Evaluacion evaluacionExistente = evaluacionService.getEvaluacionPorEmail(email);                        
-            if (evaluacionExistente == null) {
+            Evaluacion evaluacionExistente = evaluacionService.getEvaluacionPorEmail(email);                                               
+            if (evaluacionExistente == null && evaluacionTecnica == null) {
                   return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Evaluación no encontrada");
-            }            
+            }                
             
             // luego actualizar los campos de la evaluación existente con los valores de la evaluación actualizada
-            evaluacionExistente.setAcs(evaluacionActualizada.getAcs());
-            evaluacionExistente.setPcs(evaluacionActualizada.getPcs());
-            
+            evaluacionExistente.setAc(evaluacionTecnica.getAc());
+            evaluacionExistente.setPc(evaluacionTecnica.getPc());
+            evaluacionExistente.setRa(evaluacionTecnica.getRa());
+            evaluacionExistente.setRte(evaluacionTecnica.getRte());
+            evaluacionExistente.setSc(evaluacionTecnica.getSc());
+            evaluacionExistente.setUa(evaluacionTecnica.getUa());
+            evaluacionExistente.setPs(evaluacionTecnica.getPs());
+            System.out.println("\n");
+            System.out.println("\n");
+            System.out.println("\n");
+            System.out.println(evaluacionExistente.getRa().getRa_2());
+            System.out.println(evaluacionExistente.getAc().getAc_1());
+            System.out.println("\n");
+            System.out.println("\n");
+            System.out.println("\n");
+            // acService.actualizarAc(evaluacionExistente);
+            // pcService.actualizarPc(evaluacionExistente);
+            // raService.actualizarRa(evaluacionExistente);
+            // rteService.actualizarRte(evaluacionExistente);
+            // scService.actualizarSc(evaluacionExistente);
+            // uaService.actualizarUa(evaluacionExistente);
+            // psService.actualizarPs(evaluacionExistente);
             
             // guardar la evaluación actualizada en la base de datos
             evaluacionService.saveEvaluacion(evaluacionExistente);
@@ -182,7 +236,15 @@ public class Controladores {
                   ProcesoClinico procesoClinico = new ProcesoClinico();
                   Compatibilidad compatibilidad = new Compatibilidad();
                   Usabilidad usabilidad = new Usabilidad();
-                  Seguridad seguridad = new Seguridad();    
+                  Seguridad seguridad = new Seguridad();  
+                  Ac ac = new Ac();
+                  Pc pc = new Pc();
+                  Ra ra = new Ra();
+                  Rte rte = new Rte();
+                  Sc sc = new Sc();
+                  Ua ua = new Ua();
+                  Ps ps = new Ps();
+                    
 
                   empresa.setempresaevaluada(false);
 
@@ -193,12 +255,28 @@ public class Controladores {
                   evaluacion.setFormproce(procesoClinico);
                   evaluacion.setFormsegu(seguridad);
                   evaluacion.setFormusa(usabilidad);
+                  evaluacion.setAc(ac);
+                  evaluacion.setPc(pc);
+                  evaluacion.setRa(ra);
+                  evaluacion.setRte(rte);
+                  evaluacion.setSc(sc);
+                  evaluacion.setUa(ua);
+                  evaluacion.setPs(ps);
+
 
                   fiabilidad.setEvaluacion(evaluacion);
                   procesoClinico.setEvaluacion(evaluacion);
                   compatibilidad.setEvaluacion(evaluacion);
                   usabilidad.setEvaluacion(evaluacion);
                   seguridad.setEvaluacion(evaluacion);
+                  ac.setEvaluacion(evaluacion);
+                  pc.setEvaluacion(evaluacion);
+                  ra.setEvaluacion(evaluacion);
+                  rte.setEvaluacion(evaluacion);
+                  sc.setEvaluacion(evaluacion);
+                  ua.setEvaluacion(evaluacion);
+                  ps.setEvaluacion(evaluacion);
+
 
                   evaluacionService.saveEvaluacion(evaluacion);
 

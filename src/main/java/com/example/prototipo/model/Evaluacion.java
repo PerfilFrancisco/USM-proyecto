@@ -52,33 +52,36 @@ public class Evaluacion {
       private ProcesoClinico formproce;
 
       @OneToMany(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
+      @JoinColumn(name = "correo")
       private List<Evaluador> evaluadores;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Ac> acs;
+      @JoinColumn(name = "id_ac")
+      private Ac ac;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Pc> pcs;
+      @JoinColumn(name = "id_pc")
+      private Pc pc;
 
       @OneToOne( cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Ra> ras;
+      @JoinColumn(name = "id_ra")
+      private Ra ra;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Rte> rtes;
+      @JoinColumn(name = "id_rte")
+      private Rte rte;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Sc> scs;
+      @JoinColumn(name = "id_sc")
+      private Sc sc;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "idevaluacion")
-      private List<Ua> uas;
+      @JoinColumn(name = "id_ua")
+      private Ua ua;
 
+      @OneToOne(cascade = CascadeType.ALL)
+      @JoinColumn(name = "id_ps")
+      private Ps ps;
 
       public Evaluacion() {
       }
@@ -87,7 +90,7 @@ public class Evaluacion {
 
       public Evaluacion(Long idevaluacion, Empresa empresa, Usabilidad formusa, Seguridad formsegu,
                   Compatibilidad formcompa, Fiabilidad formfia, ProcesoClinico formproce, List<Evaluador> evaluadores,
-                  List<Ac> acs, List<Pc> pcs, List<Ra> ras, List<Rte> rtes, List<Sc> scs, List<Ua> uas) {
+                  Ac ac, Pc pc, Ra ra, Rte rte, Sc sc, Ua ua, Ps ps) {
             this.idevaluacion = idevaluacion;
             this.empresa = empresa;
             this.formusa = formusa;
@@ -96,12 +99,34 @@ public class Evaluacion {
             this.formfia = formfia;
             this.formproce = formproce;
             this.evaluadores = evaluadores;
-            this.acs = acs;
-            this.pcs = pcs;
-            this.ras = ras;
-            this.rtes = rtes;
-            this.scs = scs;
-            this.uas = uas;
+            this.ac = ac;
+            this.pc = pc;
+            this.ra = ra;
+            this.rte = rte;
+            this.sc = sc;
+            this.ua = ua;
+            this.ps = ps;
+      }
+
+      @Override
+      public String toString() {
+      return "Evaluacion { " +
+            "idevaluacion=" + idevaluacion + 
+            ", empresa=" + empresa + 
+            ", formusa=" + formusa + 
+            ", formsegu=" + formsegu + 
+            ", formcompa=" + formcompa +
+            ", formfia=" + formfia +
+            ", formproce=" + formproce +
+            ", evaluadores=" + evaluadores +
+            ", ac=" + ac +
+            ", pc=" + pc +
+            ", ra=" + ra +
+            ", rte=" + rte +
+            ", sc=" + sc +
+            ", ua=" + ua +
+            ", ps=" + ps +
+            " }";
       }
 
 
@@ -111,9 +136,11 @@ public class Evaluacion {
       }
 
 
+
       public void setIdevaluacion(Long idevaluacion) {
             this.idevaluacion = idevaluacion;
       }
+
 
 
       public Empresa getEmpresa() {
@@ -121,9 +148,11 @@ public class Evaluacion {
       }
 
 
+
       public void setEmpresa(Empresa empresa) {
             this.empresa = empresa;
       }
+
 
 
       public Usabilidad getFormusa() {
@@ -131,9 +160,11 @@ public class Evaluacion {
       }
 
 
+
       public void setFormusa(Usabilidad formusa) {
             this.formusa = formusa;
       }
+
 
 
       public Seguridad getFormsegu() {
@@ -141,9 +172,11 @@ public class Evaluacion {
       }
 
 
+
       public void setFormsegu(Seguridad formsegu) {
             this.formsegu = formsegu;
       }
+
 
 
       public Compatibilidad getFormcompa() {
@@ -151,9 +184,11 @@ public class Evaluacion {
       }
 
 
+
       public void setFormcompa(Compatibilidad formcompa) {
             this.formcompa = formcompa;
       }
+
 
 
       public Fiabilidad getFormfia() {
@@ -161,9 +196,11 @@ public class Evaluacion {
       }
 
 
+
       public void setFormfia(Fiabilidad formfia) {
             this.formfia = formfia;
       }
+
 
 
       public ProcesoClinico getFormproce() {
@@ -171,9 +208,11 @@ public class Evaluacion {
       }
 
 
+
       public void setFormproce(ProcesoClinico formproce) {
             this.formproce = formproce;
       }
+
 
 
       public List<Evaluador> getEvaluadores() {
@@ -181,71 +220,94 @@ public class Evaluacion {
       }
 
 
+
       public void setEvaluadores(List<Evaluador> evaluadores) {
             this.evaluadores = evaluadores;
       }
 
 
-      public List<Ac> getAcs() {
-            return acs;
+
+      public Ac getAc() {
+            return ac;
       }
 
 
-      public void setAcs(List<Ac> acs) {
-            this.acs = acs;
+
+      public void setAc(Ac ac) {
+            this.ac = ac;
       }
 
 
-      public List<Pc> getPcs() {
-            return pcs;
+
+      public Pc getPc() {
+            return pc;
       }
 
 
-      public void setPcs(List<Pc> pcs) {
-            this.pcs = pcs;
+
+      public void setPc(Pc pc) {
+            this.pc = pc;
       }
 
 
-      public List<Ra> getRas() {
-            return ras;
+
+      public Ra getRa() {
+            return ra;
       }
 
 
-      public void setRas(List<Ra> ras) {
-            this.ras = ras;
+
+      public void setRa(Ra ra) {
+            this.ra = ra;
       }
 
 
-      public List<Rte> getRtes() {
-            return rtes;
+
+      public Rte getRte() {
+            return rte;
       }
 
 
-      public void setRtes(List<Rte> rtes) {
-            this.rtes = rtes;
+
+      public void setRte(Rte rte) {
+            this.rte = rte;
       }
 
 
-      public List<Sc> getScs() {
-            return scs;
+
+      public Sc getSc() {
+            return sc;
       }
 
 
-      public void setScs(List<Sc> scs) {
-            this.scs = scs;
+
+      public void setSc(Sc sc) {
+            this.sc = sc;
       }
 
 
-      public List<Ua> getUas() {
-            return uas;
+
+      public Ua getUa() {
+            return ua;
       }
 
 
-      public void setUas(List<Ua> uas) {
-            this.uas = uas;
+
+      public void setUa(Ua ua) {
+            this.ua = ua;
       }
 
-      
+
+
+      public Ps getPs() {
+            return ps;
+      }
+
+
+
+      public void setPs(Ps ps) {
+            this.ps = ps;
+      }
 
       
 }
