@@ -1,9 +1,12 @@
 package com.example.prototipo.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.prototipo.model.Empresa;
@@ -27,6 +31,7 @@ import com.example.prototipo.model.Sc;
 import com.example.prototipo.model.Seguridad;
 import com.example.prototipo.model.Ua;
 import com.example.prototipo.model.Usabilidad;
+import com.example.prototipo.pdf.DetallePdf;
 import com.example.prototipo.model.Ac;
 import com.example.prototipo.model.Administrador;
 import com.example.prototipo.model.Compatibilidad;
@@ -45,6 +50,11 @@ import com.example.prototipo.service.SeguridadService;
 import com.example.prototipo.service.UaService;
 import com.example.prototipo.service.UsabilidadService;
 import com.example.prototipo.service.UsuarioService;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -96,7 +106,10 @@ public class Controladores {
       private ScService scService;
 
       @Autowired
-      private UaService uaService;
+      private UaService uaService;   
+      
+      @Autowired
+      private DetallePdf detallePdf;
 
       ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -342,7 +355,41 @@ public class Controladores {
             }
       }
 
+      //######################
+      // zona de creacion de pdf de detalle
+      //######################
 
+
+
+      @GetMapping("/crearPdf")
+      public ResponseEntity<?> crearPdf(@RequestParam String email) throws DocumentException {            
+            // i want to create a pdf    
+            System.out.println("pre pdf");                                
+            byte[] pdfData = detallePdf.crearPdf(email);
+            System.out.println("post pdf");
+            System.out.println(pdfData);
+            if (pdfData == null){
+                  System.out.println("Error al crear el pdf");
+                  System.out.println("\n");
+                  System.out.println("\n");
+                  System.out.println("\n");
+                  System.out.println("\n");
+            }
+            System.out.println("pre httpheaders");
+            HttpHeaders headers = new HttpHeaders();
+            System.out.println("pre media type");
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            System.out.println("pre filename");
+            // Aquí puedes definir el nombre del archivo que se descargará.
+            String filename = "output.pdf";
+            System.out.println("pre content disposition");
+            headers.setContentDispositionFormData(filename, filename);
+            System.out.println("pre response entity");
+            ResponseEntity<byte[]> response = new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+            System.out.println("pre return");
+            return response;
+
+      }
 
 }
 
